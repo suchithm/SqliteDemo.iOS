@@ -107,7 +107,7 @@ namespace SqliteDemo
 		{
 			base.DidReceiveMemoryWarning (); 
 		}
-
+		//adding new comment 
 		public override void PrepareForSegue (UIStoryboardSegue segue, NSObject sender)
 		{
 			base.PrepareForSegue (segue, sender);
