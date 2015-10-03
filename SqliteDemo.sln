@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqliteDemo", "SqlliteDemo\SqliteDemo.csproj", "{E14E592A-6BE1-4198-9436-DA10345EF429}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|iPhone.Build.0 = Debug|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|Any CPU.Build.0 = Release|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|iPhone.ActiveCfg = Release|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|iPhone.Build.0 = Release|iPhone
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{E14E592A-6BE1-4198-9436-DA10345EF429}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+EndGlobal
