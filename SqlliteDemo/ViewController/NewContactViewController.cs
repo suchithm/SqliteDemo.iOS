@@ -27,15 +27,14 @@ namespace SqliteDemo
 		{
 			sqlAsyncConnection =	DbConnectionClass.FnGetConnection (); 
 			sqliteConnection = DbConnectionClass.FnGetNonAsyncConnection ();
+		    sqlAsyncConnection.CreateTableAsync<PhoneContactClass> ();
+			btnDeleteContact.Hidden = true;
 
-			sqlAsyncConnection.CreateTableAsync<PhoneContactClass> ().ContinueWith ( t =>
-			{
-				Console.WriteLine ( "Table created!" );
-			} ); 
 			if ( objPhoneContactClass != null )
 			{
 				txtContactName.Text = objPhoneContactClass.strContactName;
 				txtContactNumber.Text = objPhoneContactClass.strContactNumber.ToString();
+				btnDeleteContact.Hidden = false;
 			}
 
 			txtContactName.ShouldReturn += ( (textField ) => textField.ResignFirstResponder () );
@@ -50,6 +49,7 @@ namespace SqliteDemo
 
 			txtContactName.Layer.CornerRadius=5;
 			txtContactNumber.Layer.CornerRadius = 5;
+			btnDeleteContact.Layer.CornerRadius = 5;
 				
 		}
 
@@ -66,10 +66,8 @@ namespace SqliteDemo
 					objPhoneContactClass.strContactName = txtContactName.Text;
 					objPhoneContactClass.strContactNumber = Convert.ToInt64 ( txtContactNumber.Text );
 					int intRows = sqliteConnection.Update ( objPhoneContactClass );
-					if ( intRows != 0 )
-					{
-						FnCancel ();
-					}
+					if ( intRows != 0 ) 
+						FnCancel (); 
 					objPhoneContactClass=null;
 				}
 			};
@@ -78,6 +76,13 @@ namespace SqliteDemo
 			{
 				DismissViewController(true,null);
 			}; 
+
+			btnDeleteContact.TouchUpInside +=async delegate(object sender , EventArgs e )
+			{
+				int intRows= await sqlAsyncConnection.DeleteAsync (objPhoneContactClass);
+				if(intRows!=0)
+					FnCancel(); 
+			};
 		}
 	
 		void FnFetchRecord()
@@ -95,8 +100,7 @@ namespace SqliteDemo
 			objPhoneContactLocalClass = new PhoneContactClass ();
 			objPhoneContactLocalClass.strContactName = txtContactName.Text;
 			objPhoneContactLocalClass.strContactNumber =Convert.ToInt64( txtContactNumber.Text);
-			int intRow=await sqlAsyncConnection.InsertAsync ( objPhoneContactLocalClass );
-
+			int intRow=await sqlAsyncConnection.InsertAsync ( objPhoneContactLocalClass ); 
 			FnFetchRecord();
 			FnCancel ();
 			objPhoneContactLocalClass=null;

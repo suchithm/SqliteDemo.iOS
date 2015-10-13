@@ -49,6 +49,8 @@ namespace SqliteDemo
 
 				FnBindContactList (contactList);  
 			};
+
+	
 		}
 		async void FnInitializeView()
 		{
@@ -67,7 +69,9 @@ namespace SqliteDemo
 	
 		async Task<List<PhoneContactClass>> FnGetAllContactList()
 		{  
-			var lstAllContact =await sqlAsyncConnection.Table<PhoneContactClass>().ToListAsync(); 
+//			var lstAllContact =await sqlAsyncConnection.Table<PhoneContactClass>().ToListAsync(); 
+ 
+			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select * from PhoneContactClass order by Id ASC"  );
 			return lstAllContact;
 		}
 		async Task<List<PhoneContactClass>>FnGetContactList(string str)

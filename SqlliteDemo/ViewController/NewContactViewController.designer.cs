@@ -16,6 +16,9 @@ namespace SqliteDemo
 		UIKit.UIButton btnCancel { get; set; }
 
 		[Outlet]
+		UIKit.UIButton btnDeleteContact { get; set; }
+
+		[Outlet]
 		UIKit.UIButton btnDone { get; set; }
 
 		[Outlet]
@@ -34,11 +37,6 @@ namespace SqliteDemo
 				btnCancel = null;
 			}
 
-			if (viewFieldContainer != null) {
-				viewFieldContainer.Dispose ();
-				viewFieldContainer = null;
-			}
-
 			if (btnDone != null) {
 				btnDone.Dispose ();
 				btnDone = null;
@@ -52,6 +50,16 @@ namespace SqliteDemo
 			if (txtContactNumber != null) {
 				txtContactNumber.Dispose ();
 				txtContactNumber = null;
+			}
+
+			if (viewFieldContainer != null) {
+				viewFieldContainer.Dispose ();
+				viewFieldContainer = null;
+			}
+
+			if (btnDeleteContact != null) {
+				btnDeleteContact.Dispose ();
+				btnDeleteContact = null;
 			}
 		}
 	}

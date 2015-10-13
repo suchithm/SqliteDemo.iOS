@@ -86,21 +86,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="p9t-IL-a6y">
-                                <rect key="frame" x="35" y="115" width="250" height="223"/>
+                                <rect key="frame" x="35" y="129" width="250" height="223"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Full Name" minimumFontSize="17" id="FqF-N2-WGh">
-                                        <rect key="frame" x="21" y="45" width="208" height="30"/>
+                                        <rect key="frame" x="21" y="42" width="208" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contact Number" minimumFontSize="17" id="V4G-Zp-DUY">
-                                        <rect key="frame" x="21" y="140" width="208" height="30"/>
+                                        <rect key="frame" x="21" y="103" width="208" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zxP-h4-6dj">
+                                        <rect key="frame" x="21" y="161" width="208" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Delete Contact">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -142,6 +151,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="btnCancel" destination="dJc-fI-TJR" id="NcX-hi-Ur7"/>
+                        <outlet property="btnDeleteContact" destination="zxP-h4-6dj" id="hAv-If-oWB"/>
                         <outlet property="btnDone" destination="dEW-aD-iMb" id="PRU-d8-VkB"/>
                         <outlet property="txtContactName" destination="FqF-N2-WGh" id="Vix-Hs-RUr"/>
                         <outlet property="txtContactNumber" destination="V4G-Zp-DUY" id="4lv-Om-R03"/>
