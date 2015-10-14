@@ -97,6 +97,7 @@
       <DependentUpon>NewContactViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ContactListTableSource.cs" />
+    <Compile Include="Model\BusyIndicatorClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

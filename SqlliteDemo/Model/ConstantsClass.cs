@@ -6,6 +6,7 @@ namespace SqliteDemo
 	{
 		internal static  string strDatabaseName="dbContactList.db";
 		internal static string strDbFolderPath = Environment.GetFolderPath ( Environment.SpecialFolder.Personal );
+		internal static  string strLoadingMessage="Loading...";
 	}
 }
 

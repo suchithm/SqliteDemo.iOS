@@ -10,6 +10,7 @@ namespace SqliteDemo
 		SQLiteAsyncConnection sqlAsyncConnection;
 		SQLiteConnection sqliteConnection;
 		PhoneContactClass objPhoneContactLocalClass;
+		BusyIndicatorClass objBusyIndicator;
 		internal PhoneContactClass objPhoneContactClass{ get; set;}
 		public NewContactViewController (IntPtr handle) : base (handle)
 		{
@@ -59,16 +60,24 @@ namespace SqliteDemo
 			{
 				if ( objPhoneContactClass == null )
 				{
+					FnStartActivityIndicator();
 					await FnInsertRecord();
+					FnStopActivityIndicator();
 				}
 				else
 				{ 
 					objPhoneContactClass.strContactName = txtContactName.Text;
 					objPhoneContactClass.strContactNumber = Convert.ToInt64 ( txtContactNumber.Text );
-					int intRows = sqliteConnection.Update ( objPhoneContactClass );
-					if ( intRows != 0 ) 
-						FnCancel (); 
-					objPhoneContactClass=null;
+
+					string  strQry=string.Format ( "update PhoneContactClass set strContactName={0},strContactNumber={1} where Id={2}" , objPhoneContactClass.strContactName , objPhoneContactClass.strContactNumber , objPhoneContactClass.Id );
+					string  strQry2="update PhoneContactClass set strContactName='"+txtContactName.Text+"',strContactNumber="+objPhoneContactClass.strContactNumber+" where Id="+objPhoneContactClass.Id+"";
+					var lst= await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( strQry2 );
+					Console.WriteLine(lst);
+//					int intRows = sqliteConnection.Update ( objPhoneContactClass );
+//					if ( intRows != 0 ) 
+//						FnCancel (); 
+//					objPhoneContactClass=null;
+//					await FnUpdateRecord();
 				}
 			};
 
@@ -112,11 +121,27 @@ namespace SqliteDemo
 			txtContactNumber.Text=string.Empty;
 			DismissViewController (true,null);
 		}
-		async Task<int> FnUpdateRecord()
+		void FnStartActivityIndicator()
 		{
-			int intRow= await sqlAsyncConnection.ExecuteAsync (string.Format( "update PhoneContactClass set strContactName={0},strContactNumber={1} where Id={2}",objPhoneContactClass.strContactName,objPhoneContactClass.strContactNumber, objPhoneContactClass.Id),null);
-			return intRow;
-
+			  objBusyIndicator =new BusyIndicatorClass(UIScreen.MainScreen.Bounds,ConstantsClass.strLoadingMessage);
+			Add ( objBusyIndicator ); 
 		}
+		void FnStopActivityIndicator()
+		{
+			if ( objBusyIndicator != null )
+			{
+				objBusyIndicator.Hide();
+				objBusyIndicator.RemoveFromSuperview();
+				objBusyIndicator=null;
+			} 
+		}
+//		async Task<int> FnUpdateRecord()
+//		{
+////			int intRow= await sqlAsyncConnection.ExecuteAsync (string.Format( "update PhoneContactClass set strContactName={0},strContactNumber={1} where Id={2}",objPhoneContactClass.strContactName,objPhoneContactClass.strContactNumber, objPhoneContactClass.Id),null);
+//			var lst= await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( string.Format ( "update PhoneContactClass set strContactName={0},strContactNumber={1} where Id={2}" , objPhoneContactClass.strContactName , objPhoneContactClass.strContactNumber , objPhoneContactClass.Id ) );
+//
+////			Console.WriteLine ( "update " + intRow );
+//			return intRow;
+//		}
 	}
 }

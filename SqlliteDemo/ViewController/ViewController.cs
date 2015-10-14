@@ -13,6 +13,7 @@ namespace SqliteDemo
 		SQLiteAsyncConnection sqlAsyncConnection;
 		PhoneContactClass objPhoneContactClass; 
 		ContactListTableSource objContactListTableSource; 
+		BusyIndicatorClass objBusyIndicator;
 		public ViewController ( IntPtr handle ) : base ( handle )
 		{
 			 
@@ -30,7 +31,9 @@ namespace SqliteDemo
 			{
 				if(!string.IsNullOrEmpty(txtSearchBar.Text))
 				{
+					FnStartActivityIndicator();
 					var lstContactList= await FnGetContactList(txtSearchBar.Text);
+					FnStopActivityIndicator();
 					FnBindContactList(lstContactList);
 				}
 			};
@@ -38,15 +41,18 @@ namespace SqliteDemo
 			{
 				if(!string.IsNullOrEmpty(txtSearchBar.Text))
 				{
+					FnStartActivityIndicator();
 				    var lstContactList= await FnGetContactList(txtSearchBar.Text);
+					FnStopActivityIndicator();
 					FnBindContactList(lstContactList);
 				}
 			};
 
 			btnRefreshContactList.TouchUpInside +=async delegate(object sender , EventArgs e )
 			{
-				var contactList=await FnGetAllContactList ();
-
+				FnStartActivityIndicator();
+				var contactList=await FnGetAllContactList (); 
+				FnStopActivityIndicator();
 				FnBindContactList (contactList);  
 			};
 
@@ -54,31 +60,33 @@ namespace SqliteDemo
 		}
 		async void FnInitializeView()
 		{
+			FnStartActivityIndicator ();
 			sqlAsyncConnection =	DbConnectionClass.FnGetConnection (); 
 			tableViewContactsList.Hidden=true;
-			await  sqlAsyncConnection.CreateTableAsync<PhoneContactClass> ();
- 
-			var contactList=await FnGetAllContactList ();
- 
+
+			await  sqlAsyncConnection.CreateTableAsync<PhoneContactClass> (); 
+			var contactList=await FnGetAllContactList (); 
+			FnStopActivityIndicator ();
 			FnBindContactList (contactList);  
 		
 			btnAddContact.SetBackgroundImage ( UIImage.FromBundle ( "Images/iconAdd" ) , UIControlState.Normal ); 
 			btnRefreshContactList.SetBackgroundImage ( UIImage.FromBundle ( "Images/iconRefreshImg" ) , UIControlState.Normal );
 			tableViewContactsList.Layer.CornerRadius = 10;
+
+		
 		}
 	
 		async Task<List<PhoneContactClass>> FnGetAllContactList()
 		{  
 //			var lstAllContact =await sqlAsyncConnection.Table<PhoneContactClass>().ToListAsync(); 
  
-			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select * from PhoneContactClass order by Id ASC"  );
+			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select * from PhoneContactClass order by strContactName COLLATE NOCASE ASC"  );
 			return lstAllContact;
 		}
 		async Task<List<PhoneContactClass>>FnGetContactList(string str)
 		{
 			var lstContact =await  sqlAsyncConnection.Table<PhoneContactClass> ().Where ( v => v.strContactName.Contains ( str ) ).ToListAsync();
-			return lstContact;
-
+			return lstContact; 
 		} 
 		void FnBindContactList(List<PhoneContactClass> lstContactList)
 		{ 
@@ -97,19 +105,33 @@ namespace SqliteDemo
 
 					tableViewContactsList.Source = objContactListTableSource;
 					tableViewContactsList.ReloadData (); 
+
+				
 				}
 
 			} 
 		}
+	
 		void FnContactSelected(PhoneContactClass _objPhoneContactClass)
 		{
 			objPhoneContactClass = _objPhoneContactClass;
 			PerformSegue ("EditContact",this);
 
 		}
-		public override void DidReceiveMemoryWarning ()
+	
+		void FnStartActivityIndicator()
 		{
-			base.DidReceiveMemoryWarning (); 
+			objBusyIndicator =new BusyIndicatorClass(UIScreen.MainScreen.Bounds,ConstantsClass.strLoadingMessage);
+			Add ( objBusyIndicator ); 
+		}
+		void FnStopActivityIndicator()
+		{
+			if ( objBusyIndicator != null )
+			{
+				objBusyIndicator.Hide();
+				objBusyIndicator.RemoveFromSuperview();
+				objBusyIndicator=null;
+			} 
 		}
 		//adding new comment 
 		public override void PrepareForSegue (UIStoryboardSegue segue, NSObject sender)
