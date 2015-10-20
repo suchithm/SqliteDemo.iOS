@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="Model\ContactListTableSource.cs" />
     <Compile Include="Model\BusyIndicatorClass.cs" />
+    <Compile Include="Model\AlertDialogClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -117,5 +118,8 @@
     <BundleResource Include="Resources\Images\iconAdd.png" />
     <BundleResource Include="Resources\Images\iconRefresh.png" />
     <BundleResource Include="Resources\Images\iconRefreshImg.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Icon.png" />
   </ItemGroup>
 </Project>
