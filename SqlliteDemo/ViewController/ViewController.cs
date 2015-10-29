@@ -25,6 +25,11 @@ namespace SqliteDemo
 			FnInitializeView ();
 		
 		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated); 
+		}
 		void FnTapEvents()
 		{  
 			txtSearchBar.SearchButtonClicked +=async delegate(object sender , EventArgs e )
@@ -51,6 +56,7 @@ namespace SqliteDemo
 			btnRefreshContactList.TouchUpInside +=async delegate(object sender , EventArgs e )
 			{
 				FnStartActivityIndicator();
+				await Task.Delay(300);
 				var contactList=await FnGetAllContactList (); 
 				FnStopActivityIndicator();
 				FnBindContactList (contactList);  
@@ -63,7 +69,7 @@ namespace SqliteDemo
 			FnStartActivityIndicator ();
 			sqlAsyncConnection =	DbConnectionClass.FnGetConnection (); 
 			tableViewContactsList.Hidden=true;
-
+			await Task.Delay (300);
 			await  sqlAsyncConnection.CreateTableAsync<PhoneContactClass> (); 
 			var contactList=await FnGetAllContactList (); 
 			FnStopActivityIndicator ();
@@ -77,15 +83,14 @@ namespace SqliteDemo
 		}
 	
 		async Task<List<PhoneContactClass>> FnGetAllContactList()
-		{  
-//			var lstAllContact =await sqlAsyncConnection.Table<PhoneContactClass>().ToListAsync(); 
- 
-			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select * from PhoneContactClass order by strContactName COLLATE NOCASE ASC"  );
+		{     
+			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select Id,strContactName,strContactNumber from PhoneContactClass order by strContactName COLLATE NOCASE ASC"  );
+			FnStopActivityIndicator ();
 			return lstAllContact;
 		}
 		async Task<List<PhoneContactClass>>FnGetContactList(string str)
-		{
-			var lstContact =await  sqlAsyncConnection.Table<PhoneContactClass> ().Where ( v => v.strContactName.Contains ( str ) ).ToListAsync();
+		{ 
+			var lstContact =await  sqlAsyncConnection.Table<PhoneContactClass> ().Where ( v => v.strContactName.Contains ( str ) ).ToListAsync(); 
 			return lstContact; 
 		} 
 		void FnBindContactList(List<PhoneContactClass> lstContactList)
@@ -104,9 +109,7 @@ namespace SqliteDemo
 					objContactListTableSource.ConatctRowSelectedEventAction += FnContactSelected;
 
 					tableViewContactsList.Source = objContactListTableSource;
-					tableViewContactsList.ReloadData (); 
-
-				
+					tableViewContactsList.ReloadData ();  
 				}
 
 			} 

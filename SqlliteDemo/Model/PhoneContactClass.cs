@@ -10,8 +10,6 @@ namespace SqliteDemo
 		[NotNull]
 		public string strContactName{get;set;} 
 		public long strContactNumber{ get; set;}
-
-
 	}
 }
 

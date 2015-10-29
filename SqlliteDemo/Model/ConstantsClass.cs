@@ -8,7 +8,7 @@ namespace SqliteDemo
 		internal const string strDatabaseName="dbContactList.db";
 		internal readonly static string strDbFolderPath = Environment.GetFolderPath ( Environment.SpecialFolder.Personal );
 		internal const string strLoadingMessage="Loading..."; 
-		internal readonly static string strExceptionMessage="Opps! something went wrong,kindly restart the app";
+		internal readonly static string strExceptionMessage="Opps! Unable to process, Please recheck previous input";
 		internal const string strOkButtonText="Ok";
 		internal const string strDeleteConfirmationText="Are you sure you want delete?";
 		internal const string strPositiveBtnText="Proceed";

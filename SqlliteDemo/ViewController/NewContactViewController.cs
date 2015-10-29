@@ -1,7 +1,7 @@
 using System; 
 using SQLite; 
-using System.Threading.Tasks; 
-using UIKit; 
+using System.Threading.Tasks;
+using UIKit;  
 
 namespace SqliteDemo
 {
@@ -56,19 +56,18 @@ namespace SqliteDemo
 					} 
 					if ( objPhoneContactClass == null )
 					{
-						FnStartActivityIndicator ();
+						FnStartActivityIndicator (); 
 						int intRow=await FnInsertRecord ();
 						FnStopActivityIndicator ();
 
 						if ( intRow != 0 )
 							FnCancel ();
 						else
-							AlertDialogClass.FnShowAlertDialog ( ConstantsClass.strAppName , ConstantsClass.strExceptionMessage , ConstantsClass.strOkButtonText ); 	
-						 
+							AlertDialogClass.FnShowAlertDialog ( ConstantsClass.strAppName , ConstantsClass.strExceptionMessage , ConstantsClass.strOkButtonText ); 	 
 					}
 					else
 					{    
-						FnStartActivityIndicator (); 
+						FnStartActivityIndicator ();  
 						await FnUpdateRecord ();
 						FnStopActivityIndicator (); 
 						FnCancel ();  
@@ -95,7 +94,9 @@ namespace SqliteDemo
 					int intButtonIndex = await objButtonedAlert.FnTwoButtonedAlertDialog ( ConstantsClass.strAppName ,ConstantsClass.strDeleteConfirmationText , ConstantsClass.strNegativeBtnText ,ConstantsClass.strPositiveBtnText );
 					if ( intButtonIndex == 1 )
 					{ 
+						FnStartActivityIndicator(); 
 						int intRows = await sqlAsyncConnection.DeleteAsync ( objPhoneContactClass );
+						FnStopActivityIndicator();
 						if ( intRows != 0 )
 							FnCancel ();
 						else
@@ -104,6 +105,7 @@ namespace SqliteDemo
 				}
 				catch(Exception e2)
 				{
+					FnStopActivityIndicator();
 					Console.WriteLine(e2.Message);
 					AlertDialogClass.FnShowAlertDialog ( ConstantsClass.strAppName , ConstantsClass.strExceptionMessage , ConstantsClass.strOkButtonText );
 				}
@@ -122,10 +124,10 @@ namespace SqliteDemo
 		}
 
 		async Task<int> FnUpdateRecord()
-		{
+		{ 
 			objPhoneContactClass.strContactName = txtContactName.Text;
 			objPhoneContactClass.strContactNumber = Convert.ToInt64 ( txtContactNumber.Text ); 
-			string  strQry="update PhoneContactClass set strContactName='"+txtContactName.Text+"',strContactNumber="+objPhoneContactClass.strContactNumber+" where Id="+objPhoneContactClass.Id+""; 
+			string  strQry=string.Format( "update PhoneContactClass set strContactName='{0}',strContactNumber={1} where Id={2}",objPhoneContactClass.strContactName,objPhoneContactClass.strContactNumber,objPhoneContactClass.Id); 
 			await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( strQry );  
 			return 0;
 		}
@@ -173,7 +175,7 @@ namespace SqliteDemo
 			{
 				return ConstantsClass.strMandatoryFields;
 			}
-			else if ( txtContactNumber.Text.Length < 8 )
+			else if (!(txtContactNumber.Text.Length > 8 && txtContactNumber.Text.Length < 12) )
 			{
 				return ConstantsClass.strValidMobileNubmber;
 			}

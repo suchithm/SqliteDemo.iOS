@@ -22,13 +22,11 @@ namespace SqlliteDemo
 			// If not required for your application you can safely delete this method
 
 			// Code to start the Xamarin Test Cloud Agent
-			#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
-			#endif
+		 
 
 			return true;
 		}
-
+			
 		public override void OnResignActivation ( UIApplication application )
 		{
 			// Invoked when the application is about to move from active to inactive state.
