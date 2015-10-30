@@ -1,0 +1,73 @@
+﻿
+SQLite Async operation in Xamarin application.
+
+In Brief: SQLite is the most widely used backend for Android and iOS mobile application. SQLite is a light weight relational datbase stores a data 
+to a text file on a device.
+In this post i'll create a sample iOS application to perform an Async SQLite CRUD operations.
+
+[img]
+
+In Detail: There are many way to store data in mobile application like in shared preference,user default, text/json and Xml file etc.
+Whenever user need to store large data, SQLite is the better option. It is best practice to communicate with the database with the 
+background thread without blocking the UI thread. 
+Here i'm using xamarin Sqlite component to perform the Async CRUD operation. In this example i'm adding the new contact entry to phone bbok
+,update the existing contact and deleting a contact.
+
+Phone Contact table :
+---------------------------------------------------------
+int     | Id               |  PrimaryKey | AutoIncrement
+---------------------------------------------------------
+string  | strContactName   |
+---------------------------------------------------------
+long    | strContactNumber |
+---------------------------------------------------------
+
+In steps: 
+step 1: Prepare PhoneContact Class 
+Define class with Phone contact property as follows,
+using SQLite;
+namespace SqliteDemo
+{
+	public class PhoneContactClass
+	{
+		[PrimaryKey, AutoIncrement]
+		public int Id{ get; set;}
+		[NotNull]
+		public string strContactName{get;set;} 
+		public long strContactNumber{ get; set;}
+	}
+}
+
+step 2: Create SQLite connection class.
+To support async operation need instantiate SQLiteAsyncConnection class.
+
+using SQLite;
+namespace SqliteDemo
+{
+	public static class DbConnectionClass
+	{
+		static SQLiteAsyncConnection sqliteAsyncConnection;  
+		public static SQLiteAsyncConnection FnGetConnection()
+		{			
+			if ( sqliteAsyncConnection == null )
+				sqliteAsyncConnection = new SQLiteAsyncConnection (System.IO.Path.Combine(ConstantsClass.strDbFolderPath,ConstantsClass.strDatabaseName ));
+		    	return sqliteAsyncConnection; 
+		} 
+	}
+}
+
+
+step 3: CRUD operations
+
+3.a)Inserting new record:
+
+3.b)Read Record:
+
+3.c)Update record:
+
+3.d)Delete record:
+
+
+
+
+
