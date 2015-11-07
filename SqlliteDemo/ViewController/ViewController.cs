@@ -55,21 +55,18 @@ namespace SqliteDemo
 
 			btnRefreshContactList.TouchUpInside +=async delegate(object sender , EventArgs e )
 			{
-				FnStartActivityIndicator();
-				await Task.Delay(300);
+				FnStartActivityIndicator(); 
 				var contactList=await FnGetAllContactList (); 
 				FnStopActivityIndicator();
 				FnBindContactList (contactList);  
 			};
 
-	
 		}
 		async void FnInitializeView()
 		{
 			FnStartActivityIndicator ();
 			sqlAsyncConnection =	DbConnectionClass.FnGetConnection (); 
-			tableViewContactsList.Hidden=true;
-			await Task.Delay (300);
+			tableViewContactsList.Hidden=true; 
 			await  sqlAsyncConnection.CreateTableAsync<PhoneContactClass> (); 
 			var contactList=await FnGetAllContactList (); 
 			FnStopActivityIndicator ();
@@ -77,9 +74,7 @@ namespace SqliteDemo
 		
 			btnAddContact.SetBackgroundImage ( UIImage.FromBundle ( "Images/iconAdd" ) , UIControlState.Normal ); 
 			btnRefreshContactList.SetBackgroundImage ( UIImage.FromBundle ( "Images/iconRefreshImg" ) , UIControlState.Normal );
-			tableViewContactsList.Layer.CornerRadius = 10;
-
-		
+			tableViewContactsList.Layer.CornerRadius = 10; 
 		}
 	
 		async Task<List<PhoneContactClass>> FnGetAllContactList()

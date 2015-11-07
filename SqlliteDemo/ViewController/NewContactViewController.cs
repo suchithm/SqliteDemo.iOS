@@ -1,6 +1,6 @@
 using System; 
 using SQLite; 
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 using UIKit; 
 
 namespace SqliteDemo
@@ -17,8 +17,7 @@ namespace SqliteDemo
 		} 
 		public override void ViewDidLoad ()
 		{
-			base.ViewDidLoad ();
-
+			base.ViewDidLoad (); 
 			FnViewInitialize();
 			FnTapEvents(); 
 		}
@@ -142,7 +141,7 @@ namespace SqliteDemo
 		void FnStartActivityIndicator()
 		{
 			  objBusyIndicator =new BusyIndicatorClass(UIScreen.MainScreen.Bounds,ConstantsClass.strLoadingMessage);
-			Add ( objBusyIndicator ); 
+			  Add ( objBusyIndicator ); 
 		}
 
 		void FnStopActivityIndicator()

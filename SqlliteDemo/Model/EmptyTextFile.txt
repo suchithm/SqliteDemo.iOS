@@ -56,18 +56,60 @@ namespace SqliteDemo
 	}
 }
 
+2.)Initialize the async connection object and create table.
+Declare the async connection object once and throughout the viewcontroller only this single connection object is used for the 
+SQlite connectivity.
+CreateTableAsync creates the table of specified type if the table does not exist.
 
-step 3: CRUD operations
+
+    SQLiteAsyncConnection sqlAsyncConnection; 
+
+    sqlAsyncConnection =	DbConnectionClass.FnGetConnection ();  
+    sqlAsyncConnection.CreateTableAsync<PhoneContactClass> ();
+
+Step 3: CRUD operations
 
 3.a)Inserting new record:
+Insert a new record of type PhoneContactLocalClass. It returns no of rows affected
+async Task<int>FnInsertRecord(string strContactName,long lngContactNumber)
+		{
+			objPhoneContactLocalClass = new PhoneContactClass ();
+			objPhoneContactLocalClass.strContactName =  strContactName;
+			objPhoneContactLocalClass.strContactNumber = lngContactNumber;
+
+			int intRow=await sqlAsyncConnection.InsertAsync ( objPhoneContactLocalClass ); 
+			objPhoneContactLocalClass=null;
+			return intRow;
+		}
 
 3.b)Read Record:
+       async Task<List<PhoneContactClass>> FnGetAllContactList()
+		{     
+			var	lstAllContact=await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( "select Id,strContactName,strContactNumber from PhoneContactClass order by strContactName COLLATE NOCASE ASC"  );
+			FnStopActivityIndicator ();
+			return lstAllContact;
+		}
+
+		async Task<List<PhoneContactClass>>FnGetContactList(string str)
+		{ 
+			var lstContact =await  sqlAsyncConnection.Table<PhoneContactClass> ().Where ( v => v.strContactName.Contains ( str ) ).ToListAsync(); 
+			return lstContact; 
+		} 
 
 3.c)Update record:
+async Task<int> FnUpdateRecord(string strContactName,long lngContactNumber)
+		{ 
+			objPhoneContactClass.strContactName = strContactName;
+			objPhoneContactClass.strContactNumber = lngContactNumber; 
+			string  strQry=string.Format( "update PhoneContactClass set strContactName='{0}',strContactNumber={1} where Id={2}",objPhoneContactClass.strContactName,objPhoneContactClass.strContactNumber,objPhoneContactClass.Id); 
+			await sqlAsyncConnection.QueryAsync<PhoneContactClass> ( strQry );  
+			return 0;
+		}
+3.d)Delete record: 
 
-3.d)Delete record:
-
-
-
+     async Task<int> FnUpdateRecord()
+		{ 
+		         int intRows = await sqlAsyncConnection.DeleteAsync ( objPhoneContactClass );
+        }
 
 
